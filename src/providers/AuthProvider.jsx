@@ -55,23 +55,23 @@ const AuthProvider = ({ children }) => {
       photoURL: photo,
     })
   }
-  // Get token from server
-  const getToken = async email => {
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/jwt`,
-      { email },
-      { withCredentials: true }
-    )
-    return data
-  }
+  // // Get token from server
+  // const getToken = async email => {
+  //   const { data } = await axios.post(
+  //     `${import.meta.env.VITE_API_URL}/jwt`,
+  //     { email },
+  //     { withCredentials: true }
+  //   )
+  //   return data
+  // }
 
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser)
-      if (currentUser) {
-        getToken(currentUser.email)
-      }
+      // if (currentUser) {
+      //   getToken(currentUser.email)
+      // }
       setLoading(false)
     })
     return () => {
