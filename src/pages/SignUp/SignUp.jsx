@@ -3,6 +3,7 @@ import { FcGoogle } from 'react-icons/fc'
 import axios from 'axios'
 import useAuth from '../../hooks/useAuth'
 import toast from 'react-hot-toast'
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const SignUp = () => {
 
@@ -20,6 +21,7 @@ const SignUp = () => {
     formData.append('image' ,image)
 
     try {
+      setLoading(true)
       const {data} = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, formData)
 
       await createUser(email, password)
@@ -107,7 +109,7 @@ const SignUp = () => {
               type='submit'
               className='bg-rose-500 w-full rounded-md py-3 text-white'
             >
-              Continue
+              {loading ? <TbFidgetSpinner className='mx-auto animate-spin' /> : 'Continue'}
             </button>
           </div>
         </form>
