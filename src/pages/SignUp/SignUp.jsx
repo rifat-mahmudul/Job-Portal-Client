@@ -1,8 +1,13 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
 import axios from 'axios'
+import useAuth from '../../hooks/useAuth'
+import toast from 'react-hot-toast'
 
 const SignUp = () => {
+
+  const {loading, setLoading, createUser, updateUserProfile} = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,11 +20,12 @@ const SignUp = () => {
     formData.append('image' ,image)
 
     try {
-      //work on here
       const {data} = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, formData)
 
-      // console.log(data.data.display_url)
-
+      await createUser(email, password)
+      await updateUserProfile(name, data.data.display_url)
+      navigate('/')
+      toast.success('Signup Successful')
     } catch (error) {
       console.log(error)
     }
