@@ -8,7 +8,7 @@ import useAxiosPublic from '../../hooks/useAxiosPublic'
 const Rooms = () => {
   const axiosPublic = useAxiosPublic();
 
-  const {data : rooms, isLoading} = useQuery({
+  const {data : rooms = [], isLoading} = useQuery({
     queryKey : ['Rooms'],
     queryFn : async () => {
       const {data} = await axiosPublic.get('/rooms')
