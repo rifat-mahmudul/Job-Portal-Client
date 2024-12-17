@@ -1,24 +1,22 @@
-import { useEffect, useState } from 'react'
 import Card from './Card'
 import Container from '../Shared/Container'
 import Heading from '../Shared/Heading'
 import LoadingSpinner from '../Shared/LoadingSpinner'
+import { useQuery } from '@tanstack/react-query'
+import useAxiosPublic from '../../hooks/useAxiosPublic'
 
 const Rooms = () => {
-  const [rooms, setRooms] = useState([])
-  const [loading, setLoading] = useState(false)
+  const axiosPublic = useAxiosPublic();
 
-  useEffect(() => {
-    setLoading(true)
-    fetch(`./rooms.json`)
-      .then(res => res.json())
-      .then(data => {
-        setRooms(data)
-        setLoading(false)
-      })
-  }, [])
+  const {data : rooms, isLoading} = useQuery({
+    queryKey : ['Rooms'],
+    queryFn : async () => {
+      const {data} = await axiosPublic.get('/rooms')
+      return data;
+    }
+  })
 
-  if (loading) return <LoadingSpinner />
+  if (isLoading) return <LoadingSpinner />
 
   return (
     <Container>
