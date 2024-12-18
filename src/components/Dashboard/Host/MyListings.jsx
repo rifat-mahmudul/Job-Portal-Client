@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import useAxiosSecure from '../../../hooks/useAxiosSecure'
 import useAuth from '../../../hooks/useAuth';
 import LoadingSpinner from '../../Shared/LoadingSpinner';
 import RoomDataRow from './RoomDataRow';
+import Swal from 'sweetalert2';
 
 const MyListings = () => {
 
@@ -17,6 +18,37 @@ const MyListings = () => {
             return data;
         }
     })
+
+    const {mutateAsync} = useMutation({
+        mutationFn : async id => {
+            const {data} = await axiosSecure.delete(`/my-listings/${id}`)
+            return data;
+        },
+        onSuccess : () => {
+            Swal.fire({
+                title: "Deleted!",
+                text: "Room has been deleted.",
+                icon: "success"
+            });
+            refetch();
+        }
+    })
+
+    const handleDelete = id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                mutateAsync(id);
+            }
+        });
+    }
 
     if (isLoading) return <LoadingSpinner />
 
@@ -84,6 +116,7 @@ const MyListings = () => {
                     <RoomDataRow
                         key={room._id}
                         room={room}
+                        handleDelete={handleDelete}
                     />
                 ))}
 

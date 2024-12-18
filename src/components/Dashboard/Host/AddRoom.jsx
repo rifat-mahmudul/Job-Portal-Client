@@ -6,13 +6,13 @@ import { Helmet } from 'react-helmet-async'
 import { useMutation } from '@tanstack/react-query'
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast"
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddRoom = () => {
 
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [imagePreview, setImagePreview] = useState()
     const [imageText, setImageText] = useState('Upload Image')
@@ -37,7 +37,7 @@ const AddRoom = () => {
 
         onSuccess : () => {
             toast.success('Room Added Successfully!')
-            // navigate('/dashboard/my-listings')
+            navigate('/dashboard/my-listings')
             setLoading(false)
         }
     })
