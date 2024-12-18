@@ -1,17 +1,29 @@
 import PropTypes from 'prop-types'
 import Button from '../Shared/Button/Button'
 import { DateRange } from 'react-date-range';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const RoomReservation = ({ room }) => {
 
   const [state, setState] = useState([
     {
-      startDate: new Date(),
-      endDate: null,
+      startDate: new Date(room?.from),
+      endDate: new Date(room?.to),
       key: 'selection'
     }
   ]);
+
+  useEffect(() => {
+    if (room?.from && room?.to) {
+      setState([
+        {
+          startDate: new Date(room.from),
+          endDate: new Date(room.to),
+          key: 'selection',
+        }
+      ]);
+    }
+  }, [room]);
 
 
   return (
@@ -24,8 +36,15 @@ const RoomReservation = ({ room }) => {
       <div className='flex justify-center'>
         {/* Calender */}
         <DateRange
-          editableDateInputs={true}
-          onChange={item => setState([item.selection])}
+          onChange={() => {
+            setState([
+              {
+                startDate: new Date(room.from),
+                endDate: new Date(room.to),
+                key: 'selection',
+              },
+            ])
+          }}
           moveRangeOnFirstSelection={false}
           ranges={state}
           rangeColors={['#F43F5E']}
