@@ -8,7 +8,10 @@ const AddRoomForm = ({
     date, 
     handleDate, 
     handleSubmit,
-    loading
+    loading,
+    handleImage,
+    imagePreview,
+    imageText
 }) => {
 
 return (
@@ -77,11 +80,12 @@ return (
                     />
                 </div>
 
-                <div className=' p-4 bg-white w-full  m-auto rounded-lg'>
+                <div className=' p-4 bg-white w-full  m-auto rounded-lg flex flex-col sm:flex-row items-center gap-10'>
                     <div className='file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg'>
                     <div className='flex flex-col w-max mx-auto text-center'>
                         <label>
                         <input
+                            onChange={e => handleImage(e.target.files[0])}
                             className='text-sm cursor-pointer w-36 hidden'
                             type='file'
                             name='image'
@@ -90,10 +94,18 @@ return (
                             hidden
                         />
                         <div className='bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500'>
-                            Upload Image
+                            {/* {imageText} */}
+                            {imageText.length > 20
+                            ? imageText.split('.')[0].slice(0, 15) +
+                            '....' +
+                            imageText.split('.')[1]
+                            : imageText}
                         </div>
                         </label>
                     </div>
+                    </div>
+                    <div className='h-16 w-16 object-cover overflow-hidden flex items-center'>
+                    {imagePreview && <img className="rounded-md" src={imagePreview} />}
                     </div>
                 </div>
                 <div className='flex justify-between gap-2'>

@@ -14,6 +14,8 @@ const AddRoom = () => {
     const axiosSecure = useAxiosSecure();
     // const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [imagePreview, setImagePreview] = useState()
+    const [imageText, setImageText] = useState('Upload Image')
 
     const [date, setDate] = useState([
         {
@@ -90,6 +92,11 @@ const AddRoom = () => {
         }
     }
 
+    const handleImage = image => {
+        setImagePreview(URL.createObjectURL(image))
+        setImageText(image.name)
+    }
+
     return (
         <div>
             <Helmet>
@@ -101,6 +108,9 @@ const AddRoom = () => {
             handleDate={handleDate} 
             handleSubmit={handleSubmit}
             loading={loading}
+            handleImage={handleImage}
+            imagePreview={imagePreview}
+            imageText={imageText}
             >
 
             </AddRoomForm>
