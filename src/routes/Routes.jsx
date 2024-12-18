@@ -8,6 +8,7 @@ import RoomDetails from '../pages/RoomDetails/RoomDetails'
 import PrivateRoute from './PrivateRoute'
 import Dashboard from '../layouts/Dashboard'
 import Statistics from '../components/Dashboard/Common/Statistics'
+import AddRoom from '../components/Dashboard/Host/AddRoom'
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         index : true,
         element : <Statistics></Statistics>
+      },
+      {
+        path : 'add-room',
+        element : <AddRoom></AddRoom>
       }
     ]
   }
