@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import Button from '../Shared/Button/Button'
 import { DateRange } from 'react-date-range';
 import { useState, useEffect } from 'react';
+import { differenceInCalendarDays } from 'date-fns'
 
 const RoomReservation = ({ room }) => {
 
@@ -24,6 +25,10 @@ const RoomReservation = ({ room }) => {
       ]);
     }
   }, [room]);
+
+  const totalPrice =
+    parseInt(differenceInCalendarDays(new Date(room.to), new Date(room.from))) *
+    room?.price
 
 
   return (
@@ -58,7 +63,7 @@ const RoomReservation = ({ room }) => {
       <hr />
       <div className='p-4 flex items-center justify-between font-semibold text-lg'>
         <div>Total</div>
-        <div>${room?.price}</div>
+        <div>${totalPrice}</div>
       </div>
     </div>
   )
