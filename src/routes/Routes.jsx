@@ -11,6 +11,7 @@ import Statistics from '../components/Dashboard/Common/Statistics'
 import AddRoom from '../components/Dashboard/Host/AddRoom'
 import MyListings from '../components/Dashboard/Host/MyListings'
 import ManageUsers from '../components/Dashboard/Admin/ManageUsers'
+import Profile from '../components/Dashboard/Common/Profile'
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path : 'manage-users',
         element : <ManageUsers></ManageUsers>
+      },
+      {
+        path : '/dashboard/profile',
+        element : <Profile></Profile>
       },
     ]
   }
