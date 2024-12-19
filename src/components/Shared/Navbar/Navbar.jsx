@@ -4,10 +4,47 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import avatarImg from '../../../assets/images/placeholder.jpg'
+import Swal from 'sweetalert2'
+import useAxiosPublic from '../../../hooks/useAxiosPublic'
+import toast from 'react-hot-toast'
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
+  const axiosPublic = useAxiosPublic();
+
+  const handleHost = async () => {
+
+    try {
+      const currentUser = {
+        email: user?.email,
+        role: 'guest',
+        status: 'Requested',
+      }
+  
+      const {data} = await axiosPublic.put('/user', currentUser)
+  
+      Swal.fire({
+        title: "Are you want to become a host?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (data.modifiedCount > 0) {
+            toast.success('Success! Please wait for admin confirmation')
+          } else {
+            toast.success('Please!, Wait for admin approval👊')
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   return (
     <div className='fixed w-full bg-white z-10 shadow-sm'>
@@ -31,6 +68,7 @@ const Navbar = () => {
                 <div className='hidden md:block'>
                   {user && (
                     <button
+                      onClick={handleHost}
                       disabled={!user}
                       className='disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition'
                     >
