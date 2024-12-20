@@ -45,9 +45,9 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true)
-    // await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-    //   withCredentials : true
-    // })
+    await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+      withCredentials : true
+    })
     return signOut(auth)
   }
 
@@ -69,23 +69,12 @@ const AuthProvider = ({ children }) => {
       return data;
   } 
 
-
-  // const getToken = async email => {
-  //   const {data} = await axios.post(
-  //     `${import.meta.env.VITE_API_URL}/jwt`,
-  //     {email},
-  //     {withCredentials : true}
-  //   )
-  //   return data;
-  // }
-
   const getToken = async email => {
     const {data} = await axiosPublic.post(
       `${import.meta.env.VITE_API_URL}/jwt`, 
       {email}, 
       {withCredentials : true}
     )
-    console.log(data)
     return data;
   }
 
