@@ -94,10 +94,10 @@ return (
             {role === "guest" && <GuestNav></GuestNav>}
 
             {/* {Host} */}
-            {role === "guest" && <HostNav></HostNav>}
+            {role === "host" && <HostNav></HostNav>}
             
             {/* Admin */}
-            { role === "guest" && <AdminNav></AdminNav>}
+            { role === "admin" && <AdminNav></AdminNav>}
         </nav>
         </div>
     </div>

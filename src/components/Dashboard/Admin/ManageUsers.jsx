@@ -8,7 +8,7 @@ const ManageUsers = () => {
 
     const axiosSecure = useAxiosSecure();
 
-    const {data : users = [], isLoading} = useQuery({
+    const {data : users = [], isLoading, refetch} = useQuery({
         queryKey : ['users'],
         queryFn : async () => {
             const {data} = await axiosSecure('/users')
@@ -61,7 +61,7 @@ return (
                 {/* User data table row */}
 
                 {
-                    users.map(user => <UserDataRow key={user._id} user={user}></UserDataRow>)
+                    users.map(user => <UserDataRow key={user._id} user={user} refetch={refetch}></UserDataRow>)
                 }
 
             </tbody>
